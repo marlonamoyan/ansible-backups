@@ -1,0 +1,222 @@
+Building configuration...
+
+Current configuration : 4566 bytes
+!
+! Last configuration change at 11:47:25 UTC Sat Oct 5 2024 by admin
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname APP1json
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no logging console
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+ip name-server 8.8.8.8 1.1.1.1
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+flow record CCNPENCOR-CUSTOM-OUT
+ description CustomFlowForEncorLAB
+ match ipv4 destination address
+ match transport destination-port
+ collect counter bytes
+ collect counter packets
+!
+!
+flow exporter MyFlowExporter
+ destination 192.168.108.1
+ transport udp 2055
+!
+!
+flow exporter CCNP8-COLLECTOR-HOST
+ destination 192.168.108.1
+ transport udp 2055
+!
+!
+flow monitor CCNP8-INBOUND-MONITOR
+ exporter CCNP8-COLLECTOR-HOST
+ cache timeout active 30
+ record netflow ipv4 original-input
+!
+!
+flow monitor CCNP8-OUTBOUND-MONITOR
+ exporter CCNP8-COLLECTOR-HOST
+ cache timeout active 30
+ record CCNPENCOR-CUSTOM-OUT
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3706477585
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3706477585
+ revocation-check none
+ rsakeypair TP-self-signed-3706477585
+!
+!
+crypto pki certificate chain TP-self-signed-3706477585
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33373036 34373735 3835301E 170D3234 31303035 30393335 
+  31375A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 37303634 
+  37373538 35308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 0100B2C2 0898CCE7 F3A1B1E5 C97A4908 E1524ED1 991C4D77 13C6FC04 
+  08FB4DEE E6B7D32A CDF60B64 6CCD78EA 6C5C5B43 DDA756FC 29F4700C 186D7627 
+  84364868 6AB73C50 D28F467F 2415655B A2EDA362 64E2BD24 152779A6 4B9E4F19 
+  539A4948 856238C7 0E04E5F2 0792C690 E1F3EBEE 4B530D55 0C80FEA9 30818BD2 
+  26923259 F9AA572F 62A7B069 D56B655B 125962C9 001906E3 5B8123CC 5C2FA885 
+  DE07179D 4DBEDB08 A058859F C2C6AB08 EE54AD56 78BE6632 542B7CC5 F7E8DC4C 
+  602C6D9E 24A8D30E A54DE66A D8BD56C7 4F477819 634EAA34 8A8965CE BC7D206C 
+  6E380BA2 0B43F9FB 8A87B0EE B227AEFA 899922F7 F7D76AEA 2E97EC00 05BDBCAE 
+  0C6912AF 474B0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 147E9582 2CF7593E 2B00A34A 1BFD9254 E6AEB43E 
+  2D301D06 03551D0E 04160414 7E95822C F7593E2B 00A34A1B FD9254E6 AEB43E2D 
+  300D0609 2A864886 F70D0101 05050003 82010100 89407070 8B125FDD 92771912 
+  5C857B85 6342C26B 39408FDC 31D37F07 825079D3 D8494897 06B4341C 3D16AABA 
+  57A93D8E 9AA5B972 7307AC30 EE4BD03D 34C11CC5 574D1ADE A4A93046 F24D4B2F 
+  324D4D69 CF57E001 0DCD2851 5B17E945 E0C0196C 8B2192C7 2C35D186 42F22D77 
+  EB1839B8 8D5120F0 D32F6FFF C2F43079 6E2F2AB1 469A5426 E3FA5E34 66B7CAB6 
+  9E21EDC1 54F6253B DBA703BA 7FE35098 3AD3E2E4 4B36ED45 18D450F7 04C35D0F 
+  252EE756 0DBAAAF3 0AD31C7D D2563C33 CB3677FF 33566737 F257BE00 B65E1BF8 
+  84B08A56 9FDDF157 89BB8E03 AC540858 8C784CE7 EC066D4A E3273327 ED07B8A7 
+  8D4D0C41 84C0E572 E9A2B5E4 828B2E9D B3B05B6F
+  	quit
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 946EXTR30YA
+license boot level ax
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username admin privilege 15 secret 5 $1$cQX4$fPkPhF5.aHtEdTk8dxzww/
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback1
+ ip address 10.1.1.1 255.255.255.0
+!
+interface GigabitEthernet1
+ ip flow monitor CCNP8-INBOUND-MONITOR input
+ ip flow monitor CCNP8-INBOUND-MONITOR output
+ ip address 192.168.108.5 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description PYTHONBYMARLON's gigabit 2
+ ip address 192.168.102.5 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description PYTHONBYMARLON's gigabit 3
+ ip address 192.168.103.5 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 192.168.108.2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ exec-timeout 0 0
+ login local
+ transport input all
+line vty 5 14
+ exec-timeout 0 0
+ login
+ transport input all
+!
+!
+!
+!
+!
+!
+end
